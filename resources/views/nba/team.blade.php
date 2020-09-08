@@ -28,6 +28,7 @@
     </form>
     @foreach($team->comments as $comment)
       <div>
+        <p>{{$comment->user->name}}</p>
         <p>{{$comment->content}}</p>
       </div>
     @endforeach

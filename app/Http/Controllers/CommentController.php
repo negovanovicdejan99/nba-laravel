@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 use App\Team;
-use App\Player;
 use App\Comment;
 use Illuminate\Support\Facades\Auth;
 
-class TeamController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,12 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::All();
-        return view('nba.teams', compact('teams'));
+        //
+    }
+
+    public function forbiddenComment()
+    {
+        return view('forbidden-comment');
     }
 
     /**
@@ -37,9 +41,18 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    
+    public function store(CommentRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+        $user_id = Auth::id();
+        $comment = Comment::create([
+            'content' => $data['content'],
+            'team_id' => $id,
+            'user_id' => $user_id
+          ]);
+
+          return redirect("/teams/:$id");
     }
 
     /**
@@ -50,9 +63,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $team = Team::findOrFail($id);
-
-        return view('nba.team', compact('team'));
+        //
     }
 
     /**

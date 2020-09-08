@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password' => Hash::make($data['password'])
           ]);
 
-        return redirect('/');
+        return redirect('/login');
      }
 
      public function loginForm (){

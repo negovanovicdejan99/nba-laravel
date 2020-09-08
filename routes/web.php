@@ -17,10 +17,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return redirect('teams');
     });
+    Route::post('/teams/:{id}/comment', 'CommentController@store')->name('addComment')->middleware('checkComment');
     Route::get('/teams/:{id}', 'TeamController@show')->name('singleTeam');
     Route::get('/players/:{id}', 'PlayerController@show')->name('player');
     Route::get('/logout', 'AuthController@logout');
-    Route::post('/teams/:{id}/comment', 'TeamController@addComment')->name('addComment');
+    Route::get('/forbidden-comment', 'CommentController@forbiddenComment')->name('forbidden-comment');
 });
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', 'AuthController@registerForm');
