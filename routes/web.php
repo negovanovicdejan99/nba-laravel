@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/teams/:{id}', 'TeamController@show')->name('singleTeam');
     Route::get('/players/:{id}', 'PlayerController@show')->name('player');
     Route::get('/logout', 'AuthController@logout');
+    Route::post('/teams/:{id}/comment', 'TeamController@addComment')->name('addComment');
 });
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', 'AuthController@registerForm');

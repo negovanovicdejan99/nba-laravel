@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Team;
 use App\Player;
+use App\Comment;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentRequest;
 
 class TeamController extends Controller
 {
@@ -38,6 +41,19 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function addComment(CommentRequest $request, $id)
+    {
+        $data = $request->validated();
+        $user_id = Auth::id();
+        $comment = Comment::create([
+            'content' => $data['content'],
+            'team_id' => $id,
+            'user_id' => $user_id
+          ]);
+
+          return redirect("/teams/:$id");
     }
 
     /**
